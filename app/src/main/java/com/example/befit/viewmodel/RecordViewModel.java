@@ -6,6 +6,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.befit.dao.RecordDao;
+import com.example.befit.database.MyDatabase;
 import com.example.befit.entity.Record;
 import com.example.befit.repository.RecordRepository;
 
@@ -13,7 +15,7 @@ import java.util.List;
 
 public class RecordViewModel extends AndroidViewModel {
 
-    private RecordRepository mRepository;
+    private static RecordRepository mRepository;
     private LiveData<List<Record>> mAllRecords;
 
     public RecordViewModel(Application application) {
@@ -22,6 +24,8 @@ public class RecordViewModel extends AndroidViewModel {
         mAllRecords = mRepository.getAllRecords();
     }
 
+
+
     public LiveData<List<Record>> getAllRecords() {
         return mAllRecords;
     }
@@ -29,5 +33,12 @@ public class RecordViewModel extends AndroidViewModel {
     public void insert(Record record) {
         mRepository.insert(record);
     }
+
+    public void update(Record record) { mRepository.update(record);}
+
+
+
+
+
 }
 

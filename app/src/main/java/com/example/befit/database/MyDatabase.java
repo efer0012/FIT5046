@@ -9,8 +9,11 @@ import androidx.room.RoomDatabase;
 import com.example.befit.dao.RecordDao;
 import com.example.befit.entity.Record;
 
-@Database(entities = {Record.class}, version = 1, exportSchema = false)
+import java.util.concurrent.Executor;
+
+@Database(entities = {Record.class}, version = 2, exportSchema = false)
 public abstract class MyDatabase extends RoomDatabase {
+
     public abstract RecordDao recordDao();
 
     private static volatile MyDatabase instance;

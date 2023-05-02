@@ -2,6 +2,9 @@ package com.example.befit.repository;
 
 import android.app.Application;
 import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
+import androidx.room.Database;
+
 import com.example.befit.dao.RecordDao;
 import com.example.befit.database.MyDatabase;
 import com.example.befit.entity.Record;
@@ -51,5 +54,9 @@ public class RecordRepository {
             }
         });
     }
+
+
+
+
 }
 

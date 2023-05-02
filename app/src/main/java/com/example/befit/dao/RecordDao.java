@@ -13,6 +13,7 @@ import java.util.List;
 
 @Dao
 public interface RecordDao {
+
     @Insert
     void insert(Record record);
 
@@ -24,5 +25,6 @@ public interface RecordDao {
 
     @Query("SELECT * FROM record")
     LiveData<List<Record>> getAllRecords();
+
 }
 
