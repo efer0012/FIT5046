@@ -4,12 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center">
-
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/text_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:textSize="20sp"
         android:text="This is Book Classes"
-        android:textSize="20sp" />
+        android:gravity="center_horizontal" />
 </LinearLayout>
