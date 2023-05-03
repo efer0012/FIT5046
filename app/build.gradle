@@ -8,7 +8,9 @@ android {
 
     defaultConfig {
         applicationId "com.example.befit"
-        minSdk 24
+//        According to the official Mapbox documentation, scaling down the minSDK from 24 to 21
+//        may be an important step in implementing Mapbox.
+        minSdk 21
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -53,6 +55,14 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.cardview:cardview:1.0.0'
 
+    //Map box [Lee]
+    implementation ("com.mapbox.mapboxsdk:mapbox-android-sdk:9.2.0")
+            {
+                exclude group: 'group_name', module: 'module_name'
+            }
+    implementation("com.google.android.gms:play-services-location:19.0.1")
+    implementation "com.mapbox.mapboxsdk:mapbox-android-telemetry:6.2.0"
+    implementation "com.mapbox.mapboxsdk:mapbox-android-plugin-locationlayer:0.6.0"
 
 
     def room_version = "2.5.0"
