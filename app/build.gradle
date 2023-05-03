@@ -48,4 +48,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.5.3'
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-livedata:2.5.1'
+
+    //Fragment profile dependencies [Lee]
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.cardview:cardview:1.0.0'
+
 }
