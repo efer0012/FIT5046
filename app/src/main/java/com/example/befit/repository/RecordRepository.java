@@ -6,7 +6,8 @@ import androidx.room.Dao;
 import androidx.room.Database;
 
 import com.example.befit.dao.RecordDao;
-import com.example.befit.database.MyDatabase;
+import com.example.befit.database.AppDatabase;
+import com.example.befit.database.AppDatabase;
 import com.example.befit.entity.Record;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -18,7 +19,7 @@ public class RecordRepository {
     private ExecutorService executorService;
 
     public RecordRepository(Application application) {
-        MyDatabase database = MyDatabase.getInstance(application);
+        AppDatabase database = AppDatabase.getInstance(application);
         recordDao = database.recordDao();
         allRecords = recordDao.getAllRecords();
         executorService = Executors.newSingleThreadExecutor();

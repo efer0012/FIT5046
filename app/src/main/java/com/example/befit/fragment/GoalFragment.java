@@ -144,38 +144,38 @@ public class GoalFragment extends Fragment {
             }
         });
 
-            // 添加更新数据的按钮点击事件
-            Button updateButton = binding.updateButton;
-            updateButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // 获取用户选择的日期
-                    int year = datePicker.getYear();
-                    int month = datePicker.getMonth() + 1;
-                    int day = datePicker.getDayOfMonth();
-                    LocalDate localDate = null;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        localDate = LocalDate.of(year, month, day);
-                    }
-                    // 将LocalDate转换为毫秒值
-                    long date = 0;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        date = localDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
-                    }
-                    String height = etHeight.getText().toString();
-                    String weight = etWeight.getText().toString();
-
-                    // 更新日期、身高和体重数据到SharedPreferences中
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(date + "_height", height);
-                    editor.putString(date + "_weight", weight);
-                    editor.apply();
-
-                    // 更新数据到Room数据库中
-                    Record record = new Record(date, year + "-" + month + "-" + day, Float.parseFloat(height), Float.parseFloat(weight));
-                    recordViewModel.update(record);
+        // 添加更新数据的按钮点击事件
+        Button updateButton = binding.updateButton;
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 获取用户选择的日期
+                int year = datePicker.getYear();
+                int month = datePicker.getMonth() + 1;
+                int day = datePicker.getDayOfMonth();
+                LocalDate localDate = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    localDate = LocalDate.of(year, month, day);
                 }
-            });
+                // 将LocalDate转换为毫秒值
+                long date = 0;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    date = localDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
+                }
+                String height = etHeight.getText().toString();
+                String weight = etWeight.getText().toString();
+
+                // 更新日期、身高和体重数据到SharedPreferences中
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(date + "_height", height);
+                editor.putString(date + "_weight", weight);
+                editor.apply();
+
+                // 更新数据到Room数据库中
+                Record record = new Record(date, year + "-" + month + "-" + day, Float.parseFloat(height), Float.parseFloat(weight));
+                recordViewModel.update(record);
+            }
+        });
 
         // 清楚输入内容
         binding.clearButton.setOnClickListener(new View.OnClickListener() {

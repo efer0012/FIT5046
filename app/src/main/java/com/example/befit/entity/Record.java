@@ -19,13 +19,13 @@ public class Record {
         this.height=height;
         this.weight = weight;
     }
-        public long getDate() {
-            return date;
-        }
-
-        public String getDate_show() {return date_show;}
-
-        public float getWeight() {
-            return weight;
-        }
+    public long getDate() {
+        return date;
     }
+
+    public String getDate_show() {return date_show;}
+
+    public float getWeight() {
+        return weight;
+    }
+}

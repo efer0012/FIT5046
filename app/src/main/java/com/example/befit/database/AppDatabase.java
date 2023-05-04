@@ -9,19 +9,23 @@ import androidx.room.RoomDatabase;
 import com.example.befit.dao.BookingDao;
 import com.example.befit.dao.ClassesDao;
 import com.example.befit.dao.CustomerDao;
+import com.example.befit.dao.RecordDao;
 import com.example.befit.entity.Booking;
 import com.example.befit.entity.Classes;
 import com.example.befit.entity.Customer;
+import com.example.befit.entity.Record;
 import com.example.befit.model.BeFitClasses;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Customer.class, Classes.class, Booking.class}, version = 1, exportSchema = false)
+@Database(entities = {Customer.class, Classes.class, Booking.class, Record.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract CustomerDao customerDao();
     public abstract ClassesDao classesDao();
     public abstract BookingDao bookingDao();
+
+    public abstract RecordDao recordDao();
 
     private static AppDatabase INSTANCE;
 
