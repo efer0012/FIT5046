@@ -6,13 +6,25 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.befit.adapter.RecyclerViewAdapter;
 import com.example.befit.databinding.ActivityMainBinding;
+import com.example.befit.model.BeFitClasses;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private RecyclerView.LayoutManager layoutManager;
+    private List<BeFitClasses> classes;
+    private RecyclerViewAdapter adapter;
     private ActivityMainBinding binding;
     private AppBarConfiguration mAppBarConfiguration;
     @Override
