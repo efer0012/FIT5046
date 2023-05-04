@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+<!--    Create three user permission in order to implement map box,
+which was referenced from ChatGPT,
+the promote i enter is how could i configure mapbox inside manifests-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+        
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,8 +20,8 @@
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.NavigationJava.NoActionBar"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.NavigationJava.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
