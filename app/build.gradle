@@ -33,6 +33,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+
 }
 
 dependencies {
@@ -56,12 +57,14 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
 
     //Map box [Lee]
-    implementation ('com.mapbox.maps:android:10.12.1') {
-        exclude group: 'group_name', module: 'module_name'
+    implementation ('com.mapbox.mapboxsdk:mapbox-android-sdk:9.2.0') {
+        exclude group: 'com.example.group', module: 'example-module'
     }
-//    implementation("com.google.android.gms:play-services-location:19.0.1")
-//    implementation "com.mapbox.mapboxsdk:mapbox-android-telemetry:6.2.0"
-//    implementation "com.mapbox.mapboxsdk:mapbox-android-plugin-locationlayer:0.6.0"
+
+    implementation("com.google.android.gms:play-services-location:19.0.1")
+    implementation "com.mapbox.mapboxsdk:mapbox-android-telemetry:6.2.0"
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-locationlayer:0.7.0'
+
 
 
     def room_version = "2.5.0"

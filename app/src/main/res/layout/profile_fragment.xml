@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
@@ -104,16 +105,17 @@
         app:layout_constraintStart_toStartOf="@+id/tv_date_of_birth"
         app:layout_constraintTop_toBottomOf="@+id/tv_date_of_birth" />
 
-    <TextView
-        android:id="@+id/tv_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="155 franklin Map"
-        android:textColor="@color/valueColor"
-        android:textSize="18sp"
+    <com.mapbox.mapboxsdk.maps.MapView
+        android:id="@+id/user_map"
+        android:layout_width="350dp"
+        android:layout_height="190dp"
+        mapbox:mapbox_cameraTargetLat="40.73581"
+        mapbox:mapbox_cameraTargetLng="-73.99155"
         app:layout_constraintStart_toStartOf="@+id/tv_address_label"
-        app:layout_constraintTop_toBottomOf="@+id/tv_address_label" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_address_label"
+        mapbox_renderTextureMode="true"
+        mapbox:mapbox_cameraZoom="11"
+        />
 
     <Button
         android:id="@+id/btn_log_out"
