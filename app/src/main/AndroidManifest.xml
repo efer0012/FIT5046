@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- add Internet permission [Wenxuan] -->
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,34 +13,36 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BeFiT"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ReportActivity"
+            android:theme="@style/Theme.Design.Light">
+        </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.NavigationJava.NoActionBar"
-            android:exported="true">
-        </activity>
-
+            android:exported="true"
+            android:theme="@style/Theme.NavigationJava.NoActionBar"></activity>
         <activity
             android:name=".LaunchActivity"
-            android:theme="@style/Theme.NavigationJava.NoActionBar"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.NavigationJava.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".SignupActivity"
-            android:theme="@style/Theme.NavigationJava.NoActionBar"
-            android:parentActivityName=".LaunchActivity">
+        <activity
+            android:name=".SignupActivity"
+            android:parentActivityName=".LaunchActivity"
+            android:theme="@style/Theme.NavigationJava.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LaunchActivity" />
         </activity>
-
-        <activity android:name=".LoginActivity"
-            android:theme="@style/Theme.NavigationJava.NoActionBar"
-            android:parentActivityName=".LaunchActivity">
+        <activity
+            android:name=".LoginActivity"
+            android:parentActivityName=".LaunchActivity"
+            android:theme="@style/Theme.NavigationJava.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LaunchActivity" />

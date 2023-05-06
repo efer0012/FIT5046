@@ -2,6 +2,7 @@ package com.example.befit.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.util.Calendar;
 import android.os.Build;
@@ -15,29 +16,20 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.example.befit.R;
+import com.example.befit.ReportActivity;
 import com.example.befit.databinding.GoalFragmentBinding;
 import com.example.befit.entity.Record;
 import com.example.befit.viewmodel.RecordViewModel;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.List;
 
 
 public class GoalFragment extends Fragment {
@@ -200,7 +192,15 @@ public class GoalFragment extends Fragment {
             }
         });
 
-
+        Button myButton = view.findViewById(R.id.myButton);
+        myButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // To another report
+                Intent intent = new Intent(getActivity(), ReportActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 
