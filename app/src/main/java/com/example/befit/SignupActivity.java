@@ -108,7 +108,7 @@ public class SignupActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
                     String msg = "Registration Successful";
-                    startActivity(new Intent(SignupActivity.this, MainActivity.class));
+                    startActivity(new Intent(SignupActivity.this, LaunchActivity.class));
                 }else {
                     String msg = "Registration Unsuccessful";
                     toastMsg(msg);

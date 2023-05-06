@@ -29,6 +29,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".SignupActivity"
+            android:parentActivityName=".LaunchActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LaunchActivity" />
+        </activity>
+
+        <activity android:name=".LoginActivity"
+            android:parentActivityName=".LaunchActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LaunchActivity" />
+        </activity>
     </application>
 
 </manifest>
