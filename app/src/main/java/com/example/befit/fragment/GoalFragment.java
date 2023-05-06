@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -131,6 +132,13 @@ public class GoalFragment extends Fragment {
                 String height = etHeight.getText().toString();
                 String weight = etWeight.getText().toString();
 
+                // 验证用户输入的体重是否是数字
+                if (!TextUtils.isDigitsOnly(weight)) {
+                    // 如果用户输入的不是数字，则显示一个提示消息
+                    binding.weightEdittext.setError("Please enter a valid weight");
+                    return;
+                }
+
 
                 // 保存日期、身高和体重数据到SharedPreferences中
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -164,6 +172,13 @@ public class GoalFragment extends Fragment {
                 }
                 String height = etHeight.getText().toString();
                 String weight = etWeight.getText().toString();
+
+                // 验证用户输入的体重是否是数字
+                if (!TextUtils.isDigitsOnly(weight)) {
+                    // 如果用户输入的不是数字，则显示一个提示消息
+                    binding.weightEdittext.setError("Please enter a valid weight");
+                    return;
+                }
 
                 // 更新日期、身高和体重数据到SharedPreferences中
                 SharedPreferences.Editor editor = sharedPreferences.edit();
