@@ -7,10 +7,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -21,6 +24,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         //FirebaseApp.initializeApp(this);
         auth = FirebaseAuth.getInstance();
         EditText emailEditText = findViewById(R.id.emailEditText);
@@ -34,19 +42,19 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser(txt_Email, txt_Pwd);
             }
         });
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void loginUser(String txt_email, String txt_pwd) {
         // call the object and provide it with email id and password
-        auth.signInWithEmailAndPassword(txt_email, txt_pwd).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+        auth.signInWithEmailAndPassword(txt_email, txt_pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
-            public void onSuccess(AuthResult authResult) {
-                toastMsg("Login Successful");
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()) {
+                    toastMsg("Login Successful");
+                    startActivity(new Intent(LoginActivity.this, LaunchActivity.class));
+                }else {
+                    toastMsg("Wrong Email or Password");
+                }
             }
         });
     }
