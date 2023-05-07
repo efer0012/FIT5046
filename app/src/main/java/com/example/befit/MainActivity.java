@@ -68,7 +68,13 @@ public class MainActivity extends AppCompatActivity {
         String email = intent.getStringExtra("email");
         // get customer by email
         CompletableFuture<Customer> customerCompletableFuture = customerViewModel.findCustomerFuture(email);
-
-
+        customerCompletableFuture.thenApply(customer -> {
+            if (customer != null){
+                System.out.println("!!!!!!!!!!" + customer.toString());
+            } else {
+                System.out.println("!!!!!!!!!! FAIL !!!!!!!!!!");
+            }
+            return customer;
+        });
     }
 }
