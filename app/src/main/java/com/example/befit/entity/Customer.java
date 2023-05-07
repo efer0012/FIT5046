@@ -9,11 +9,17 @@ public class Customer {
     @PrimaryKey
     @NonNull
     public String email;
+    @NonNull
     public String firstName;
+    @NonNull
     public String lastName;
+    @NonNull
     public String gender;
+    @NonNull
     public String dateOfBirth;
+    @NonNull
     public String address;
+    @NonNull
     public double height; //TODO: need entry in sign up, or default 0?
 
     public Customer(@NonNull String email,

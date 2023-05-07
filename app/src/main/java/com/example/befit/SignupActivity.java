@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.befit.entity.Customer;
 import com.example.befit.viewmodel.CustomerViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -143,9 +144,11 @@ public class SignupActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
                     toastMsg("Registration Successful");
-                    // TODO: insert new Customer into Room
-                    //System.out.println("!!!!!!!!!!!!!!!" + email + first_name + last_name);
-                    //System.out.println("!!!!!!!!!!!!!!!" + gender + dob + address);
+                    // TODO: insert new Customer into Room, height default 0
+                    //System.out.println("!!!!!!!!!!!!!!!" + email + first_name + last_name + gender + dob + address);
+                    Customer customer = new Customer(email, first_name, last_name, gender, dob, address, 0);
+                    customerViewModel.insertCustomer(customer);
+
                     // return back to launch screen
                     startActivity(new Intent(SignupActivity.this, LaunchActivity.class));
                 }else {

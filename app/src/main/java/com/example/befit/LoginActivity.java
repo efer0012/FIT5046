@@ -51,7 +51,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
                     toastMsg("Login Successful");
-                    startActivity(new Intent(LoginActivity.this, LaunchActivity.class));
+                    Intent intent = new Intent(LoginActivity.this, LaunchActivity.class);
+                    // pass customer's email to MainActivity
+                    intent.putExtra("email", txt_email);
+                    startActivity(intent);
                 }else {
                     toastMsg("Wrong Email or Password");
                 }

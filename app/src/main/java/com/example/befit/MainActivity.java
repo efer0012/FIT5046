@@ -2,6 +2,7 @@ package com.example.befit;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -10,15 +11,19 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.befit.adapter.RecyclerViewAdapter;
 import com.example.befit.databinding.ActivityMainBinding;
+import com.example.befit.entity.Customer;
 import com.example.befit.model.BeFitClasses;
+import com.example.befit.viewmodel.CustomerViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,12 +32,16 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerViewAdapter adapter;
     private ActivityMainBinding binding;
     private AppBarConfiguration mAppBarConfiguration;
+    private CustomerViewModel customerViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        // create view model
+        customerViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(CustomerViewModel.class);
 
         setSupportActionBar(binding.appBar.toolbar);
 
@@ -53,5 +62,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
         //Sets up a Toolbar for use with a NavController.
         NavigationUI.setupWithNavController(binding.appBar.toolbar,navController, mAppBarConfiguration);
+
+        // get customer's email from LoginActivity
+        Intent intent = getIntent();
+        String email = intent.getStringExtra("email");
+        // get customer by email
+        CompletableFuture<Customer> customerCompletableFuture = customerViewModel.findCustomerFuture(email);
+
+
     }
 }
