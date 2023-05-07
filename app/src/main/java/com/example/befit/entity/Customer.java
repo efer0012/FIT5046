@@ -37,4 +37,8 @@ public class Customer {
         this.address = address;
         this.height = height;
     }
+    @Override
+    public String toString(){
+        return "Customer {" + email + "," + firstName + "," + lastName + "," + gender + "," + dateOfBirth + "," + address + "," + height + "}";
+    }
 }
