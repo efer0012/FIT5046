@@ -25,8 +25,8 @@ public interface CustomerDao {
     @Query("SELECT * FROM customer")
     LiveData<List<Customer>> getAllCustomers();
 
-    @Query("SELECT * FROM customer WHERE customerId = :customerId LIMIT 1")
-    Customer findByID(int customerId);
+    @Query("SELECT * FROM customer WHERE email = :customerEmail LIMIT 1")
+    Customer findCustomer(String customerEmail);
 
     @Query("DELETE FROM customer")
     void deleteAll();

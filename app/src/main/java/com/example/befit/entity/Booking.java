@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey;
 
 @Entity(foreignKeys = {
         @ForeignKey(entity = Customer.class,
-                parentColumns = "customerId",
-                childColumns = "customerId",
+                parentColumns = "email",
+                childColumns = "customerEmail",
                 onDelete = ForeignKey.CASCADE),
         @ForeignKey(entity = Classes.class,
                 parentColumns = "classId",
@@ -18,12 +18,12 @@ import androidx.room.PrimaryKey;
 public class Booking {
     @PrimaryKey
     public int bookingId;
-    public int customerId;
+    public String customerEmail;
     public int classId;
 
-    public Booking(@NonNull int customerId,
+    public Booking(@NonNull String customerEmail,
                  @NonNull int classId) {
-        this.customerId = customerId;
+        this.customerEmail = customerEmail;
         this.classId = classId;
     }
 }

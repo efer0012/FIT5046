@@ -21,8 +21,8 @@ public class CustomerViewModel extends AndroidViewModel {
         allCustomers = cRepository.getAllCustomers();
     }
 
-    public CompletableFuture<Customer> findByIDFuture(final int customerId) {
-        return cRepository.findByIDFuture(customerId);
+    public CompletableFuture<Customer> findCustomerFuture(final String email) {
+        return cRepository.findCustomerFuture(email);
     }
 
     public LiveData<List<Customer>> getAllCustomers() {

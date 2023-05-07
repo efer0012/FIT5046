@@ -63,11 +63,11 @@ public class CustomerRepository {
         });
     }
 
-    public CompletableFuture<Customer> findByIDFuture(final int customerId) {
+    public CompletableFuture<Customer> findCustomerFuture(final String email) {
         return CompletableFuture.supplyAsync(new Supplier<Customer>() {
             @Override
             public Customer get() {
-                return customerDao.findByID(customerId);
+                return customerDao.findCustomer(email);
             }
         }, AppDatabase.databaseWriteExecutor);
     }

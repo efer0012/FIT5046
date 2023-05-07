@@ -27,15 +27,15 @@ public interface BookingDao {
     @Query("SELECT * FROM Booking")
     LiveData<List<Booking>> getAllBookings();
 
-    @Query("SELECT * FROM Booking WHERE customerId = :customerId")
-    LiveData<List<Booking>> getBookingsForCustomer(int customerId);
+    @Query("SELECT * FROM Booking WHERE customerEmail = :customerEmail")
+    LiveData<List<Booking>> getBookingsForCustomer(String customerEmail);
 
     @Query("SELECT * FROM Booking WHERE classId = :classId")
     LiveData<List<Booking>> getBookingsForClass(int classId);
 
     @Transaction
-    @Query("SELECT * FROM Booking WHERE customerId = :customerId")
-    LiveData<List<BookingWithClass>> getBookingsWithClassesForCustomer(int customerId);
+    @Query("SELECT * FROM Booking WHERE customerEmail = :customerEmail")
+    LiveData<List<BookingWithClass>> getBookingsWithClassesForCustomer(String customerEmail);
     @Query("DELETE FROM booking")
     void deleteAll();
 }

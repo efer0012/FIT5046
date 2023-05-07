@@ -7,25 +7,25 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "Customer")
 public class Customer {
     @PrimaryKey
-    public int customerId;
+    @NonNull
+    public String email;
     public String firstName;
     public String lastName;
-    public String email;
     public String gender;
     public String dateOfBirth;
     public String address;
-    public double height;
+    public double height; //TODO: need entry in sign up, or default 0?
 
-    public Customer(@NonNull String firstName,
+    public Customer(@NonNull String email,
+                    @NonNull String firstName,
                     @NonNull String lastName,
-                    @NonNull String email,
                     @NonNull String gender,
                     @NonNull String dateOfBirth,
                     @NonNull String address,
                     @NonNull double height) {
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
         this.address = address;

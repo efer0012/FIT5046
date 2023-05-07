@@ -47,13 +47,11 @@ public class MainActivity extends AppCompatActivity {
                 .setOpenableLayout(binding.drawerLayout)
                 .build();
         FragmentManager fragmentManager= getSupportFragmentManager();
-        NavHostFragment navHostFragment = (NavHostFragment)
-                fragmentManager.findFragmentById(R.id.nav_host_fragment);
+        NavHostFragment navHostFragment = (NavHostFragment) fragmentManager.findFragmentById(R.id.nav_host_fragment);
         NavController navController = navHostFragment.getNavController();
         //Sets up a NavigationView for use with a NavController.
         NavigationUI.setupWithNavController(binding.navView, navController);
         //Sets up a Toolbar for use with a NavController.
-        NavigationUI.setupWithNavController(binding.appBar.toolbar,navController,
-                mAppBarConfiguration);
+        NavigationUI.setupWithNavController(binding.appBar.toolbar,navController, mAppBarConfiguration);
     }
 }
