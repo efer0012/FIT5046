@@ -7,4 +7,15 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="Profile_backgroundColor">#F5F5F5</color>
+    <color name="Profile_labelColor">#616161</color>
+    <color name="Profile_valueColor">#212121</color>
+    <color name="buttonColor">#3F51B5</color>
+    <color name="buttonTextColor">#FFFFFF</color>
+    <color name="lineColor">#A9A9A9</color>
+    <color name="Club_backgroundColor">#FFFFFF</color>
+    <color name="Club_labelColor">#000000</color>
+    <color name="Club_textColorGray">#808080</color>
+    <color name="Club_valueColor">#000000</color>
+
 </resources>
