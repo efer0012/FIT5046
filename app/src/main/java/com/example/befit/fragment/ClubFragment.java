@@ -82,7 +82,9 @@ public class ClubFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        addBinding.clubMap.onDestroy();
+        if (addBinding != null) {
+            addBinding.clubMap.onDestroy();
+        }
         super.onDestroy();
     }
 
