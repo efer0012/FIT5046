@@ -10,7 +10,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        //        Importing these for map box
+//        Importing these for map box
         maven {
             url 'https://api.mapbox.com/downloads/v2/releases/maven'
             authentication {
@@ -24,7 +24,7 @@ dependencyResolutionManagement {
                 password = "sk.eyJ1IjoiZG9vbzIwMDAiLCJhIjoiY2xoN281emtvMDBobjNybXM0OGNlbGd1MCJ9.J1R-f1ySwLRwIAEhFNbTTA"
             }
         }
-        rootProject.name = "BeFiT"
-        include ':app'
     }
 }
+rootProject.name = "BeFiT"
+include ':app'
