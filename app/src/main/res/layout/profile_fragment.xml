@@ -113,7 +113,6 @@
         mapbox:mapbox_cameraTargetLng="-73.99155"
         app:layout_constraintStart_toStartOf="@+id/tv_address_label"
         app:layout_constraintTop_toBottomOf="@+id/tv_address_label"
-        mapbox_renderTextureMode="true"
         mapbox:mapbox_cameraZoom="11"
         />
 
