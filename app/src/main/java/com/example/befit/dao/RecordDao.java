@@ -26,5 +26,7 @@ public interface RecordDao {
     @Query("SELECT * FROM record")
     LiveData<List<Record>> getAllRecords();
 
+    @Query("SELECT * FROM record WHERE date_show BETWEEN :startDate AND :endDate")
+    List<Record> getWeightsBetweenDates(String startDate, String endDate);
 }
 

@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.befit.dao.RecordDao;
-import com.example.befit.database.MyDatabase;
+import com.example.befit.database.AppDatabase;
 import com.example.befit.entity.Record;
 import com.example.befit.repository.RecordRepository;
 

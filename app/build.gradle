@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services' // Add the Google services Gradle plugin
 }
 
 android {
@@ -52,6 +53,10 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-livedata:2.5.1'
 
+    //Room Dependencies [Edward]
+    implementation 'androidx.room:room-runtime:2.5.0'
+    annotationProcessor 'androidx.room:room-compiler:2.5.0'
+
     //Fragment profile dependencies [Lee]
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.cardview:cardview:1.0.0'
@@ -64,11 +69,16 @@ dependencies {
     implementation "com.mapbox.mapboxsdk:mapbox-android-telemetry:6.2.0"
     implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-locationlayer:0.7.0'
 
+    // Import the Firebase BoM [Wenxuan]
+    implementation platform('com.google.firebase:firebase-bom:32.0.0')
 
+    // dependencies for Firebase products [Wenxuan]
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.1'
+    implementation 'com.google.firebase:firebase-firestore' // Cloud Firestore [Wenxuan]
 
-    def room_version = "2.5.0"
-    implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
-
-
+    // dependency for Workmanager [Wenxuan]
+    implementation "androidx.work:work-runtime:2.8.0"
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

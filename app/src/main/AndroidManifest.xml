@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-<!--    Create three user permission in order to implement map box,
-which was referenced from ChatGPT,
-the promote i enter is how could i configure mapbox inside manifests-->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-        
+    <!-- add Internet permission [Wenxuan] -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -19,7 +14,15 @@ the promote i enter is how could i configure mapbox inside manifests-->
         android:theme="@style/Theme.BeFiT"
         tools:targetApi="31">
         <activity
+            android:name=".ReportActivity"
+            android:theme="@style/Theme.Design.Light">
+        </activity>
+        <activity
             android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.NavigationJava.NoActionBar"></activity>
+        <activity
+            android:name=".LaunchActivity"
             android:exported="true"
             android:theme="@style/Theme.NavigationJava.NoActionBar">
             <intent-filter>
@@ -27,6 +30,22 @@ the promote i enter is how could i configure mapbox inside manifests-->
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".SignupActivity"
+            android:parentActivityName=".LaunchActivity"
+            android:theme="@style/Theme.NavigationJava.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LaunchActivity" />
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:parentActivityName=".LaunchActivity"
+            android:theme="@style/Theme.NavigationJava.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LaunchActivity" />
         </activity>
     </application>
 
