@@ -1,10 +1,13 @@
 package com.example.befit.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.example.befit.LaunchActivity;
 import com.example.befit.R;
 import com.example.befit.database.Firestore;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,6 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.befit.databinding.ProfileFragmentBinding;
+
+import java.util.Objects;
 
 public class ProfileFragment extends Fragment implements OnMapReadyCallback {
 
@@ -46,6 +51,18 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback {
 
         Firestore firestore = new Firestore();
         firestore.retrieve("example1@email.com");
+        Button logoutButton = view.findViewById(R.id.btn_log_out);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Logout();
+                // After logging out, redirect to the launch activity
+                Intent intent = new Intent(getActivity(), LaunchActivity.class);
+                startActivity(intent);
+                // If you want to finish the current activity
+                requireActivity().finish();
+            }
+        });
 
         return view;
     }
