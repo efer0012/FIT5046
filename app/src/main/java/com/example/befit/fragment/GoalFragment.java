@@ -107,7 +107,7 @@ public class GoalFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 获取用户选择的日期
+                // Get date from User
                 int year = datePicker.getYear();
                 int month = datePicker.getMonth() + 1;
                 int day = datePicker.getDayOfMonth();
@@ -115,7 +115,7 @@ public class GoalFragment extends Fragment {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     localDate = LocalDate.of(year, month, day);
                 }
-                // 将LocalDate转换为毫秒值
+                // Modify date Format to input in database
                 long date = 0;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     date = localDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
@@ -124,32 +124,32 @@ public class GoalFragment extends Fragment {
                 String height = etHeight.getText().toString();
                 String weight = etWeight.getText().toString();
 
-                // 验证用户输入的体重是否是数字
+                // Validate whether user entered are number
                 if (!TextUtils.isDigitsOnly(weight)) {
-                    // 如果用户输入的不是数字，则显示一个提示消息
+                    // Error message
                     binding.weightEdittext.setError("Please enter a valid weight");
                     return;
                 }
 
 
-                // 保存日期、身高和体重数据到SharedPreferences中
+                // Store data into SharedPreferences
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString(date + "_height", height);
                 editor.putString(date + "_weight", weight);
                 editor.apply();
 
-                // 将数据插入到Room数据库中
+                // Room data
                 Record record = new Record(date, date_show, Float.parseFloat(height), Float.parseFloat(weight));
                 recordViewModel.insert(record);
             }
         });
 
-        // 添加更新数据的按钮点击事件
+        // Update Button
         Button updateButton = binding.updateButton;
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 获取用户选择的日期
+                // Get user date
                 int year = datePicker.getYear();
                 int month = datePicker.getMonth() + 1;
                 int day = datePicker.getDayOfMonth();
@@ -157,7 +157,7 @@ public class GoalFragment extends Fragment {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     localDate = LocalDate.of(year, month, day);
                 }
-                // 将LocalDate转换为毫秒值
+                // Modify date Format to input in database
                 long date = 0;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     date = localDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
@@ -165,26 +165,26 @@ public class GoalFragment extends Fragment {
                 String height = etHeight.getText().toString();
                 String weight = etWeight.getText().toString();
 
-                // 验证用户输入的体重是否是数字
+                // Validate whether user entered are number
                 if (!TextUtils.isDigitsOnly(weight)) {
-                    // 如果用户输入的不是数字，则显示一个提示消息
+                    // Error Message
                     binding.weightEdittext.setError("Please enter a valid weight");
                     return;
                 }
 
-                // 更新日期、身高和体重数据到SharedPreferences中
+                // Store data into SharedPreferences
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString(date + "_height", height);
                 editor.putString(date + "_weight", weight);
                 editor.apply();
 
-                // 更新数据到Room数据库中
+                // Room data
                 Record record = new Record(date, year + "-" + month + "-" + day, Float.parseFloat(height), Float.parseFloat(weight));
                 recordViewModel.update(record);
             }
         });
 
-        // 清楚输入内容
+        // Clear entries
         binding.clearButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 binding.weightEdittext.setText("");
