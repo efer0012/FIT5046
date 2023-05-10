@@ -59,7 +59,7 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback {
                 // After logging out, redirect to the launch activity
                 Intent intent = new Intent(getActivity(), LaunchActivity.class);
                 startActivity(intent);
-                // If you want to finish the current activity
+                // Finish the current activity
                 requireActivity().finish();
             }
         });
@@ -74,7 +74,6 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback {
         mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
-                // Map is set up and the style has loaded.
             }
         });
     }
