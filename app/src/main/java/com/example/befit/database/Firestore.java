@@ -3,12 +3,10 @@ package com.example.befit.database;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import java.util.List;
+import java.util.Map;
 
 import com.example.befit.entity.Customer;
 import com.example.befit.viewmodel.CustomerViewModel;
@@ -27,19 +25,12 @@ public class Firestore extends AppCompatActivity {
 
     //private static final ThreadPoolExecutor EXECUTOR = new ThreadPoolExecutor(2, 4, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
 
-    public void upload() {
-        // set up Customer view model
-        CustomerViewModel customerViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(CustomerViewModel.class);
-
+    public void upload(CustomerViewModel customerViewModel) {
         // get all customers
-        customerViewModel.getAllCustomers().observe(this, new Observer<List<Customer>>() {
-            @Override
-            public void onChanged(@Nullable final List<Customer> customers) {
-                for (Customer c : customers) {
-                    add(c);
-                }
+        List<Customer> allCustomers = customerViewModel.getAll();
+            for (Customer c : allCustomers) {
+                add(c);
             }
-        });
     }
 
     public void add(Customer customer){
@@ -59,20 +50,18 @@ public class Firestore extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                        Log.d(TAG, "!!!! Customer " + customer.email + " successfully written!");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
+                        Log.w(TAG, "Error writing " + customer.email + e);
                     }
                 });
     }
 
-    private Customer customerR;
-
-    public Customer retrieve(String email){
+    public void retrieve(String email, FirestoreCallback firestoreCallback){
         // set up
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
@@ -87,17 +76,30 @@ public class Firestore extends AppCompatActivity {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot customerDoc = task.getResult();
-                    customerR = customerDoc.toObject(Customer.class);
                     if (customerDoc.exists()) {
-                        Log.d(TAG, "DocumentSnapshot data: " + customerDoc.getData());
+                        Map<String, Object> customerData = customerDoc.getData();
+                        Log.d(TAG, "!!!! DocumentSnapshot data: " + customerData);
+                        Customer result = new Customer(
+                                customerDoc.getId(),
+                                (String) customerData.get("firstName"),
+                                (String)customerData.get("lastName"),
+                                (String)customerData.get("address"),
+                                (String)customerData.get("gender"),
+                                (String)customerData.get("dateOfBirth"),
+                                (Double) customerData.get("height"));
+                        firestoreCallback.onCallback(result);
                     } else {
-                        Log.d(TAG, "No such document");
+                        Log.d(TAG, "!!!! No such document");
                     }
                 } else {
-                    Log.d(TAG, "get failed with ", task.getException());
+                    Log.d(TAG, "!!!! get failed with ", task.getException());
                 }
             }
         });
-        return customerR;
+    }
+
+    public interface FirestoreCallback {
+        void onCallback(Customer customer);
     }
 }
+

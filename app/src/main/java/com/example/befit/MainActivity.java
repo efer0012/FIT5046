@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.befit.adapter.RecyclerViewAdapter;
+import com.example.befit.database.Firestore;
 import com.example.befit.databinding.ActivityMainBinding;
 import com.example.befit.entity.Customer;
 import com.example.befit.model.BeFitClasses;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         // create view model
         customerViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(CustomerViewModel.class);
 
-        setSupportActionBar(binding.appBar.toolbar);
+        setSupportActionBar(binding.appBar.toolbar); //app_bar_main
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home_fragment,
@@ -66,8 +67,9 @@ public class MainActivity extends AppCompatActivity {
         // get customer's email from LoginActivity
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
-        // get customer by email
-        CompletableFuture<Customer> customerCompletableFuture = customerViewModel.findCustomerFuture(email);
+
+        // get customer from Room
+        /*CompletableFuture<Customer> customerCompletableFuture = customerViewModel.findCustomerFuture(email);
         customerCompletableFuture.thenApply(customer -> {
             if (customer != null){
                 System.out.println("!!!!!!!!!!" + customer.toString());
@@ -75,6 +77,19 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("!!!!!!!!!! FAIL !!!!!!!!!!");
             }
             return customer;
+        });*/
+
+        // get customer from Firestore
+        Firestore firestore = new Firestore();
+        firestore.retrieve(email, new Firestore.FirestoreCallback() {
+            @Override
+            public void onCallback(Customer customer) {
+                System.out.println("!!!!!!!!!! " + customer.toString());
+            }
         });
+
+
+        // upload all customers into Firestore
+        firestore.upload(customerViewModel);
     }
 }
