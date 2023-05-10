@@ -149,7 +149,7 @@ public class ReportActivity extends AppCompatActivity {
         BarChart barChart = findViewById(R.id.bar_chart);
         barChart.setData(barData);
 
-        // 设置自定义的横坐标标签
+        // Set the customised xLables, e.g. Date 1, Date 2;
         ArrayList<String> xLabels = new ArrayList<>();
         for (int i = 0; i < weightList.size(); i++) {
             xLabels.add("Date " + (i + 1)); // 自定义标签，可以根据需求进行修改

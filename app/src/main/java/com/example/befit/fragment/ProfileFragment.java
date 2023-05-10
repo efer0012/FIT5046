@@ -1,11 +1,16 @@
 package com.example.befit.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.example.befit.LaunchActivity;
 import com.example.befit.R;
+import com.example.befit.database.Firestore;
+import com.google.firebase.auth.FirebaseAuth;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
@@ -16,6 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.befit.databinding.ProfileFragmentBinding;
+
+import java.util.Objects;
 
 public class ProfileFragment extends Fragment implements OnMapReadyCallback {
 
@@ -42,6 +49,21 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback {
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
+        Firestore firestore = new Firestore();
+        firestore.retrieve("example1@email.com");
+        Button logoutButton = view.findViewById(R.id.btn_log_out);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Logout();
+                // After logging out, redirect to the launch activity
+                Intent intent = new Intent(getActivity(), LaunchActivity.class);
+                startActivity(intent);
+                // Finish the current activity
+                requireActivity().finish();
+            }
+        });
+
         return view;
     }
 
@@ -52,9 +74,14 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback {
         mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
-                // Map is set up and the style has loaded. Now you can add data or make other map adjustments
             }
         });
+    }
+
+
+    public void Logout()
+    {
+        FirebaseAuth.getInstance().signOut();
     }
 
     @Override
