@@ -14,16 +14,22 @@ import java.util.function.Supplier;
 
 public class CustomerRepository {
     private CustomerDao customerDao;
-    private LiveData<List<Customer>> allCustomers;
+    private LiveData<List<Customer>> allLiveCustomers;
+    private List<Customer> allCustomers;
 
     public CustomerRepository(Application application){
         AppDatabase db = AppDatabase.getInstance(application);
         customerDao = db.customerDao();
-        allCustomers = customerDao.getAllCustomers();
+        allLiveCustomers = customerDao.getAllCustomers();
+        allCustomers = customerDao.getAll();
     }
 
     // Room executes this query on a separate thread
     public LiveData<List<Customer>> getAllCustomers() {
+        return allLiveCustomers;
+    }
+
+    public List<Customer> getAll() {
         return allCustomers;
     }
 

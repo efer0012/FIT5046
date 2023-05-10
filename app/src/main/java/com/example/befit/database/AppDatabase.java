@@ -38,6 +38,7 @@ public abstract class AppDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, "AppDatabase")
+                    .allowMainThreadQueries() // Allow database operations on the main thread
                     .addCallback(new BeFitClasses()) //pre populate classes database
                     .fallbackToDestructiveMigration()
                     .build();

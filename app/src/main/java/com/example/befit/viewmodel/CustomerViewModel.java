@@ -13,12 +13,15 @@ import java.util.concurrent.CompletableFuture;
 
 public class CustomerViewModel extends AndroidViewModel {
     private CustomerRepository cRepository;
-    private LiveData<List<Customer>> allCustomers;
+    private LiveData<List<Customer>> allLiveCustomers;
+    private List<Customer> allCustomers;
+
 
     public CustomerViewModel(Application application) {
         super(application);
         cRepository = new CustomerRepository(application);
-        allCustomers = cRepository.getAllCustomers();
+        allLiveCustomers = cRepository.getAllCustomers();
+        allCustomers = cRepository.getAll();
     }
 
     public CompletableFuture<Customer> findCustomerFuture(final String email) {
@@ -26,6 +29,10 @@ public class CustomerViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Customer>> getAllCustomers() {
+        return allLiveCustomers;
+    }
+
+    public List<Customer> getAll() {
         return allCustomers;
     }
 

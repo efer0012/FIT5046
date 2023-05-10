@@ -25,6 +25,9 @@ public interface CustomerDao {
     @Query("SELECT * FROM customer")
     LiveData<List<Customer>> getAllCustomers();
 
+    @Query("SELECT * FROM customer")
+    List<Customer> getAll();
+
     @Query("SELECT * FROM customer WHERE email = :customerEmail LIMIT 1")
     Customer findCustomer(String customerEmail);
 
