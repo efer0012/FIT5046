@@ -76,7 +76,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.firebaseui:firebase-ui-auth:8.0.1'
-    implementation 'com.google.firebase:firebase-firestore' // Cloud Firestore [Wenxuan]
+    implementation 'com.google.firebase:firebase-firestore:24.6.0' // Cloud Firestore [Wenxuan]
 
     // dependency for Workmanager [Wenxuan]
     implementation "androidx.work:work-runtime:2.8.0"

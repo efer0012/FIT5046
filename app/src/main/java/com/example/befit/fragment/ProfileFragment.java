@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.befit.R;
+import com.example.befit.database.Firestore;
+import com.google.firebase.auth.FirebaseAuth;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
@@ -42,6 +44,9 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback {
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
+        Firestore firestore = new Firestore();
+        firestore.retrieve("example1@email.com");
+
         return view;
     }
 
@@ -55,6 +60,12 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback {
                 // Map is set up and the style has loaded.
             }
         });
+    }
+
+
+    public void Logout()
+    {
+        FirebaseAuth.getInstance().signOut();
     }
 
     @Override

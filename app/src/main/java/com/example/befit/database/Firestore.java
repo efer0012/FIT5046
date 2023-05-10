@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.befit.entity.Customer;
@@ -16,10 +17,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class Firestore extends AppCompatActivity {
 
@@ -42,7 +46,7 @@ public class Firestore extends AppCompatActivity {
         });
     }
 
-    public void add(Customer customer){
+    public void add(Customer customer) {
         // set up Firestore
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
@@ -72,7 +76,7 @@ public class Firestore extends AppCompatActivity {
 
     private Customer customerR;
 
-    public Customer retrieve(String email){
+    public Customer retrieve(String email) {
         // set up
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
@@ -80,7 +84,7 @@ public class Firestore extends AppCompatActivity {
                 .build();
         db.setFirestoreSettings(settings);
 
-        // get Customer
+//         get Customer
         DocumentReference customerRef = db.collection("customers").document(email);
         customerRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -101,3 +105,23 @@ public class Firestore extends AppCompatActivity {
         return customerR;
     }
 }
+//        Get all the Customer info [Lee]
+//        CollectionReference customerRef = db.collection("customers");
+//        customerRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    List<String> list = new ArrayList<>();
+//                    for (QueryDocumentSnapshot document : task.getResult())
+//                    {
+//                        list.add(document.getId());
+//                    } Log.d(TAG, list.toString());
+//
+//                } else {
+//                    Log.d(TAG, "get failed with ", task.getException());
+//                }
+//            }
+//        });
+//        return customerR;
+//    }
+//}
