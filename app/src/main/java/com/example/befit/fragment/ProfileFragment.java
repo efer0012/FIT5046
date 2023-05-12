@@ -150,7 +150,7 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback {
                     // 在这里设置相机的目标位置
                     CameraPosition position = new CameraPosition.Builder()
                             .target(new LatLng(latitude, longitude))
-                            .zoom(15)
+                            .zoom(18)
                             .build();
                     mapboxMap.setCameraPosition(position);
                 } else {
