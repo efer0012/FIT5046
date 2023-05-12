@@ -75,6 +75,7 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback {
         TextView usernameTextView = view.findViewById(R.id.tv_name);
         TextView emailTextView = view.findViewById(R.id.tv_email);
         TextView dateOfBirthTextView = view.findViewById(R.id.tv_date_of_birth);
+        TextView addressTextView = view.findViewById(R.id.tv_user_address);
         Button logoutButton = view.findViewById(R.id.btn_log_out);
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +104,7 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback {
                     usernameTextView.setText(firstName + " " + lastName);
                     emailTextView.setText(email);
                     dateOfBirthTextView.setText(dateOfBirth);
+                    addressTextView.setText(address);
                     geocodeAddress(address);
                 } else {
                     // Handle document does not exist
@@ -147,7 +149,7 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback {
                     // 在这里设置相机的目标位置
                     CameraPosition position = new CameraPosition.Builder()
                             .target(new LatLng(latitude, longitude))
-                            .zoom(11)
+                            .zoom(15)
                             .build();
                     mapboxMap.setCameraPosition(position);
                 } else {
