@@ -107,4 +107,30 @@ public class Firestore extends AppCompatActivity {
     public interface FirestoreCallback {
         void onCallback(Customer customer);
     }
+
+    public void getUserInfo(String email, final OnGetDataListener listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("customers").document(email);;
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null) {
+                        listener.onSuccess(document);
+                    } else {
+                        listener.onFailure();
+                    }
+                } else {
+                    listener.onFailure();
+                }
+            }
+        });
+    }
+
+    public interface OnGetDataListener {
+        void onSuccess(DocumentSnapshot document);
+        void onFailure();
+    }
+
 }

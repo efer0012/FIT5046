@@ -1,27 +1,44 @@
 package com.example.befit.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.befit.LaunchActivity;
 import com.example.befit.R;
 import com.example.befit.database.Firestore;
+import com.example.befit.entity.Customer;
+import com.firebase.ui.auth.data.model.User;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 
+import com.mapbox.api.geocoding.v5.MapboxGeocoding;
+import com.mapbox.api.geocoding.v5.models.CarmenFeature;
+import com.mapbox.api.geocoding.v5.models.GeocodingResponse;
+import com.mapbox.geojson.Point;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import timber.log.Timber;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.befit.databinding.ProfileFragmentBinding;
 
+import java.util.List;
 import java.util.Objects;
 
 public class ProfileFragment extends Fragment implements OnMapReadyCallback {
@@ -36,9 +53,12 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Firestore firestore = new Firestore();
+        firestore.retrieve("example@email.com");
         Mapbox.getInstance(requireContext(), getString(R.string.mapbox_access_token));
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,8 +69,6 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback {
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
-        Firestore firestore = new Firestore();
-        firestore.retrieve("example1@email.com");
         Button logoutButton = view.findViewById(R.id.btn_log_out);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +82,68 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
+        TextView usernameTextView = view.findViewById(R.id.tv_name);
+        TextView emailTextView = view.findViewById(R.id.tv_email);
+        TextView dateOfBirthTextView = view.findViewById(R.id.tv_date_of_birth);
+
+        Firestore firestore = new Firestore();
+        firestore.getUserInfo("example@email.com", new Firestore.OnGetDataListener() {
+            @Override
+            public void onSuccess(DocumentSnapshot document) {
+                if (document != null && document.exists()) {
+                    String firstName = document.getString("firstName");
+                    String lastName = document.getString("lastName");
+                    String email = document.getString("email");
+                    String dateOfBirth = document.getString("dateOfBirth");
+                    String address = document.getString("address");
+
+                    usernameTextView.setText(firstName + " " + lastName);
+                    emailTextView.setText(email);
+                    dateOfBirthTextView.setText(dateOfBirth);
+                } else {
+                    // Handle document does not exist
+                    usernameTextView.setText("User not found");
+                    emailTextView.setText("Email not found");
+                    dateOfBirthTextView.setText("Date of birth not found");
+                }
+            }
+
+            @Override
+            public void onFailure() {
+                usernameTextView.setText("Failed to retrieve user info");
+                emailTextView.setText("Failed to retrieve email info");
+                dateOfBirthTextView.setText("Failed to retrieve date of birth info");
+            }
+        });
+
         return view;
+    }
+
+
+    private void geocodeAddress(String address) {
+        MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
+                .accessToken(getString(R.string.mapbox_access_token))
+                .query(address)
+                .build();
+
+        mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<GeocodingResponse> call, @NonNull Response<GeocodingResponse> response) {
+                assert response.body() != null;
+                List<CarmenFeature> results = response.body().features();
+                if (results.size() > 0) {
+                    Point firstResultPoint = results.get(0).center();
+                    // 在这里使用经纬度
+                } else {
+                    // 没有找到结果
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<GeocodingResponse> call, @NonNull Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        });
     }
 
     @Override
