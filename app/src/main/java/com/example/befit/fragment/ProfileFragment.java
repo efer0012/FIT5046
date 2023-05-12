@@ -1,5 +1,7 @@
 package com.example.befit.fragment;
 
+import static androidx.fragment.app.FragmentManager.TAG;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +20,8 @@ import com.firebase.ui.auth.data.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.camera.CameraPosition;
+import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
@@ -68,7 +72,11 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback {
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);
 
+        TextView usernameTextView = view.findViewById(R.id.tv_name);
+        TextView emailTextView = view.findViewById(R.id.tv_email);
+        TextView dateOfBirthTextView = view.findViewById(R.id.tv_date_of_birth);
         Button logoutButton = view.findViewById(R.id.btn_log_out);
+
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,10 +88,6 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback {
                 requireActivity().finish();
             }
         });
-
-        TextView usernameTextView = view.findViewById(R.id.tv_name);
-        TextView emailTextView = view.findViewById(R.id.tv_email);
-        TextView dateOfBirthTextView = view.findViewById(R.id.tv_date_of_birth);
 
         Firestore firestore = new Firestore();
         firestore.getUserInfo("example@email.com", new Firestore.OnGetDataListener() {
@@ -99,6 +103,7 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback {
                     usernameTextView.setText(firstName + " " + lastName);
                     emailTextView.setText(email);
                     dateOfBirthTextView.setText(dateOfBirth);
+                    geocodeAddress(address);
                 } else {
                     // Handle document does not exist
                     usernameTextView.setText("User not found");
@@ -126,15 +131,28 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback {
                 .build();
 
         mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
+            @SuppressLint("RestrictedApi")
             @Override
             public void onResponse(@NonNull Call<GeocodingResponse> call, @NonNull Response<GeocodingResponse> response) {
                 assert response.body() != null;
                 List<CarmenFeature> results = response.body().features();
                 if (results.size() > 0) {
                     Point firstResultPoint = results.get(0).center();
-                    // 在这里使用经纬度
+                    assert firstResultPoint != null;
+                    double latitude = firstResultPoint.latitude();
+                    double longitude = firstResultPoint.longitude();
+                    // Use latitude and longitude here
+                    Timber.tag(TAG).d("Latitude: " + latitude + ", Longitude: " + longitude);
+
+                    // 在这里设置相机的目标位置
+                    CameraPosition position = new CameraPosition.Builder()
+                            .target(new LatLng(latitude, longitude))
+                            .zoom(11)
+                            .build();
+                    mapboxMap.setCameraPosition(position);
                 } else {
-                    // 没有找到结果
+                    // No results found
+                    Timber.tag(TAG).d("No results found");
                 }
             }
 
