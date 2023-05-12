@@ -175,8 +175,7 @@ public class ProfileFragment extends Fragment implements OnMapReadyCallback {
     }
 
 
-    public void Logout()
-    {
+    public void Logout() {
         FirebaseAuth.getInstance().signOut();
     }
 
