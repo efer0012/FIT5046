@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -20,6 +21,7 @@ import com.example.befit.databinding.ActivityMainBinding;
 import com.example.befit.entity.Customer;
 import com.example.befit.model.BeFitClasses;
 import com.example.befit.viewmodel.CustomerViewModel;
+import com.mapbox.mapboxsdk.Mapbox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Initial the mapbox adapter
+        Mapbox.getInstance(this, "sk.eyJ1IjoiZG9vbzIwMDAiLCJhIjoiY2xoN281emtvMDBobjNybXM0OGNlbGd1MCJ9.J1R-f1ySwLRwIAEhFNbTTA");
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -68,13 +73,15 @@ public class MainActivity extends AppCompatActivity {
         String email = intent.getStringExtra("email");
         // get customer by email
         CompletableFuture<Customer> customerCompletableFuture = customerViewModel.findCustomerFuture(email);
-        customerCompletableFuture.thenApply(customer -> {
-            if (customer != null){
-                System.out.println("!!!!!!!!!!" + customer.toString());
-            } else {
-                System.out.println("!!!!!!!!!! FAIL !!!!!!!!!!");
-            }
-            return customer;
-        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            customerCompletableFuture.thenApply(customer -> {
+                if (customer != null){
+                    System.out.println("!!!!!!!!!!" + customer.toString());
+                } else {
+                    System.out.println("!!!!!!!!!! FAIL !!!!!!!!!!");
+                }
+                return customer;
+            });
+        }
     }
 }
